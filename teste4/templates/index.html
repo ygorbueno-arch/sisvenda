@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SisVenda - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-shopping-cart"></i> SISVENDA
+        </div>
+        <div class="user-info">
+            <span>Bem-vindo, <strong>Admin</strong></span>
+            <a href="#" class="btn-logout">Sair</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="stats-grid">
+            <div class="card stat">
+                <h3>Vendas Hoje</h3>
+                <p>R$ 1.250,00</p>
+            </div>
+            <div class="card stat">
+                <h3>Produtos no Estoque</h3>
+                <p>42</p>
+            </div>
+            <div class="card stat">
+                <h3>Novos Clientes</h3>
+                <p>15</p>
+            </div>
+        </section>
+
+        <div class="main-content">
+            <section class="card table-section">
+                <div class="header-section">
+                    <h2><i class="fas fa-boxes"></i> Estoque Atual</h2>
+                    <button class="btn-action">Novo Produto</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Produto</th>
+                            <th>Preço</th>
+                            <th>Estoque</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Teclado Mecânico</td>
+                            <td>R$ 250,00</td>
+                            <td>10</td>
+                            <td><button class="btn-edit">Repor</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <aside class="card form-section">
+                <h2><i class="fas fa-plus-circle"></i> Nova Venda</h2>
+                <form>
+                    <div class="form-group">
+                        <label>ID do Produto</label>
+                        <input type="number" placeholder="Ex: 1">
+                    </div>
+                    <div class="form-group">
+                        <label>Quantidade</label>
+                        <input type="number" placeholder="Ex: 2">
+                    </div>
+                    <button type="submit" class="btn-success">Finalizar Venda</button>
+                </form>
+            </aside>
+        </div>
+    </main>
+
+</body>
+</html>

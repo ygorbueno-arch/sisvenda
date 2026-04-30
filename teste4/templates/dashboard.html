@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>SisVenda - Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo"><i class="fas fa-store"></i> SISVENDA</div>
+        <div class="user-info">
+            <span><i class="fas fa-user"></i> {{ usuario }}</span>
+            <a href="{{ url_for('logout') }}" class="btn-logout">Sair</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <main class="main-content">
+            <section class="card table-section">
+                <h2><i class="fas fa-boxes"></i> Estoque de Produtos</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Produto</th>
+                            <th>Preço</th>
+                            <th>Estoque</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in produtos %}
+                        <tr>
+                            <td>{{ p.id }}</td>
+                            <td>{{ p.nome }}</td>
+                            <td>R$ {{ "%.2f"|format(p.preco) }}</td>
+                            <td class="{{ 'text-danger' if p.estoque < 5 else '' }}">
+                                {{ p.estoque }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+
+            <aside class="actions-sidebar">
+                <div class="card form-section">
+                    <h2><i class="fas fa-cart-plus"></i> Nova Venda</h2>
+                    <form action="{{ url_for('vender') }}" method="POST">
+                        <input type="number" name="produto_id" placeholder="ID do Produto" required>
+                        <input type="number" name="quantidade" placeholder="Quantidade" required>
+                        <button type="submit" class="btn-success">Finalizar Venda</button>
+                    </form>
+                </div>
+
+                <div class="card history-section">
+                    <h2><i class="fas fa-history"></i> Últimas Vendas</h2>
+                    <ul>
+                        {% for v in vendas %}
+                        <li>
+                            <strong>{{ v.nome }}</strong><br>
+                            {{ v.quantidade }} un. - R$ {{ "%.2f"|format(v.total) }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </aside>
+        </main>
+    </div>
+</body>
+</html>
