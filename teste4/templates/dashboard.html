@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>SisVenda - Início</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="sidebar">
+        <h2>SISVENDA</h2>
+        <nav>
+            <a href="/dashboard"><i class="fas fa-home"></i> Início</a>
+            <a href="/vendas"><i class="fas fa-shopping-cart"></i> Vendas</a>
+            <a href="/produtos"><i class="fas fa-boxes"></i> Estoque</a>
+            <a href="/clientes"><i class="fas fa-users"></i> Clientes</a>
+            {% if usuario == 'admin' %}
+            <a href="/usuarios"><i class="fas fa-user-shield"></i> Funcionários</a>
+            {% endif %}
+            <a href="/logout" class="logout"><i class="fas fa-sign-out-alt"></i> Sair</a>
+        </nav>
+    </div>
+
+    <div class="content">
+        <header>
+            <h1>Bem-vindo, {{ usuario }}!</h1>
+        </header>
+        
+        <div class="grid-atalhos">
+            <a href="/vendas" class="card-atalho">Nova Venda</a>
+            <a href="/produtos" class="card-atalho">Repor Estoque</a>
+            <a href="/clientes" class="card-atalho">Novo Cliente</a>
+        </div>
+    </div>
+</body>
+</html>
