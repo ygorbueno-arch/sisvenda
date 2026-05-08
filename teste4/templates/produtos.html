@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>SisVenda - Estoque</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="sidebar">
+        <h2>SISVENDA</h2>
+        <nav>
+            <a href="/dashboard"><i class="fas fa-home"></i> Início</a>
+            <a href="/vendas"><i class="fas fa-shopping-cart"></i> Vendas</a>
+            <a href="/produtos"><i class="fas fa-boxes"></i> Estoque</a>
+            <a href="/clientes"><i class="fas fa-users"></i> Clientes</a>
+            <a href="/logout"><i class="fas fa-sign-out-alt"></i> Sair</a>
+        </nav>
+    </div>
+
+    <div class="content">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <h2><i class="fas fa-plus-circle"></i> Cadastrar Novo Produto</h2>
+        <div class="card">
+            <form method="POST">
+                <div style="display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 10px; align-items: end;">
+                    <div>
+                        <label>Nome do Produto</label>
+                        <input type="text" name="nome" placeholder="Ex: Teclado Mecânico" required>
+                    </div>
+                    <div>
+                        <label>Preço (R$)</label>
+                        <input type="number" step="0.01" name="preco" placeholder="0.00" required>
+                    </div>
+                    <div>
+                        <label>Estoque Inicial</label>
+                        <input type="number" name="estoque" placeholder="0" required>
+                    </div>
+                    <button type="submit" class="btn-success" style="height: 40px; margin-bottom: 10px;">Salvar</button>
+                </div>
+            </form>
+        </div>
+
+        <h2><i class="fas fa-list"></i> Listagem e Reposição</h2>
+        <div class="card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Produto</th>
+                        <th>Preço Unitário</th>
+                        <th>Em Estoque</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in produtos %}
+                    <tr>
+                        <td>{{ p.id }}</td>
+                        <td>{{ p.nome }}</td>
+                        <td>R$ {{ "%.2f"|format(p.preco) }}</td>
+                        <td class="{{ 'text-danger' if p.estoque < 5 else '' }}">
+                            <strong>{{ p.estoque }}</strong>
+                        </td>
+                        <td>
+                            <form action="/repor" method="POST" style="display: flex; gap: 5px;">
+                                <input type="hidden" name="id" value="{{ p.id }}">
+                                <input type="number" name="quantidade" placeholder="Qtd" style="width: 60px; margin: 0; padding: 5px;" required>
+                                <button type="submit" class="btn-action" style="background: #3498db; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">
+                                    Repor
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
